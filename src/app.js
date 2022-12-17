@@ -7,5 +7,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = process.env.PORT;
-app.listen(4000, () => console.log(`Server running in port ${PORT}`));
+import authRoutes from "./routes/auth.routes.js";
+
+app.use(authRoutes);
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Server running in port ${PORT}`));
