@@ -35,18 +35,20 @@ export const validateSignIn = async (req, res, next) => {
   try {
     const user = await connection.query(
       `
-    SELECT *
-    FROM users
-    WHERE email=$1
+      SELECT *
+      FROM users
+      WHERE email=$1;
     `,
       [email]
     );
 
-    if (!user.rowCount) return res.sendStatus(404);
+    if (!user.rowCount) return res.sendStatus(401);
 
     const confirmPassword = bcrypt.compareSync(password, user.rows[0].password);
 
     if (!confirmPassword) return res.sendStatus(401);
+
+    delete user.rows[0].password;
 
     res.locals.user = user.rows[0];
     next();
