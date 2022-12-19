@@ -57,3 +57,22 @@ export const validateSignIn = async (req, res, next) => {
     res.sendStatus(500);
   }
 };
+
+export const validateToken = async (req, res, next) => {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+
+  try {
+    const foundToken = await connection.query(
+      `SELECT * FROM sessions WHERE token=$1`,
+      [token]
+    );
+
+    if (!foundToken.rowCount) return res.sendStatus(401);
+
+    next();
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};
