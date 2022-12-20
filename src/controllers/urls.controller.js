@@ -20,3 +20,18 @@ export const create = async (req, res, next) => {
     res.sendStatus(500);
   }
 };
+
+export const findById = async (req, res) => {
+  const { url } = res.locals;
+
+  try {
+    res.send({
+      id: url.id,
+      shortUrl: url.shortened_url,
+      url: url.original_url,
+    });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};
