@@ -7,8 +7,8 @@ export const create = async (req, res, next) => {
   try {
     await connection.query(
       `
-      INSERT INTO links 
-      (owner_id, shortened_link, original_link)
+      INSERT INTO urls 
+      (owner_id, shortened_url, original_url)
       VALUES ($1, $2, $3);
     `,
       [session.user_id, newUrl, req.body.url]
