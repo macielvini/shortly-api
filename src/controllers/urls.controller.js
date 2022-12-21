@@ -21,7 +21,7 @@ export const create = async (req, res, next) => {
   }
 };
 
-export const findById = async (req, res) => {
+export const find = async (req, res) => {
   const { url } = res.locals;
 
   try {
@@ -30,6 +30,24 @@ export const findById = async (req, res) => {
       shortUrl: url.shortened_url,
       url: url.original_url,
     });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};
+
+export const redirect = async (req, res) => {
+  const { url } = res.locals;
+
+  try {
+    await connection.query(
+      `
+    UPDATE urls SET visitors = visitors + 1 WHERE id=$1
+    `,
+      [url.id]
+    );
+
+    res.redirect(url.original_url);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
