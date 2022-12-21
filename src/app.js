@@ -9,9 +9,11 @@ app.use(cors());
 
 import authRoutes from "./routes/auth.routes.js";
 import urlRoutes from "./routes/urls.routes.js";
+import usersRoutes from "./routes/users.routes.js";
 
 app.use(authRoutes);
 app.use(urlRoutes);
+app.use(usersRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running in port ${PORT}`));
