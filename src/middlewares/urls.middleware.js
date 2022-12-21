@@ -49,3 +49,10 @@ export const validateShortUrl = async (req, res, next) => {
     console.log(error);
   }
 };
+
+export const validateUrlOwner = async (req, res, next) => {
+  const { url, session } = res.locals;
+
+  if (url.owner_id !== session.user_id) return res.sendStatus(401);
+  next();
+};
