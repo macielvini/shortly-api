@@ -16,7 +16,14 @@ import {
 const router = Router();
 
 router.post("/urls/shorten", validateSchema, validateToken, create);
-router.get("/urls/:id", validateUrlId, find);
+router.get(
+  "/urls/:id",
+  validateUrlId,
+  validateUrlId,
+  validateToken,
+  validateUrlOwner,
+  find
+);
 router.get("/urls/open/:shortUrl", validateShortUrl, redirect);
 router.delete(
   "/urls/:id",
