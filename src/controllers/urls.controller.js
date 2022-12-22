@@ -53,3 +53,21 @@ export const redirect = async (req, res) => {
     res.sendStatus(500);
   }
 };
+
+export const deleteUrl = async (req, res) => {
+  const { url } = res.locals;
+
+  try {
+    await connection.query(
+      `
+      DELETE FROM urls WHERE id=$1
+    `,
+      [url.id]
+    );
+
+    res.sendStatus(204);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};
